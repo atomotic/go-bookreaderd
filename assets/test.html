@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+    <title>bookreader demo</title>
+
+    <link rel="stylesheet" type="text/css" href="/BookReader/BookReader.css"/>
+
+    <style>
+    #BRtoolbar .embed, .print { display: none; }
+    </style>
+
+    <script type="text/javascript" src="/js/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-ui-1.8.5.custom.min.js"></script>
+
+    <script type="text/javascript" src="/js/dragscrollable.js"></script>
+    <script type="text/javascript" src="/js/jquery.colorbox-min.js"></script>
+    <script type="text/javascript" src="/js/jquery.ui.ipad.js"></script>
+    <script type="text/javascript" src="/js/jquery.bt.min.js"></script>
+
+    <script type="text/javascript" src="/BookReader/BookReader.js"></script>
+</head>
+<body style="background-color: ##939598;">
+
+<div id="BookReader">
+    Internet Archive BookReader Demo    <br/>
+
+    <noscript>
+    <p>
+        The BookReader requires JavaScript to be enabled. Please check that your browser supports JavaScript and that it is enabled in the browser settings.  You can also try one of the <a href="http://www.archive.org/details/goodytwoshoes00newyiala"> other formats of the book</a>.
+    </p>
+    </noscript>
+</div>
+
+<script>
+    br = new BookReader();
+    br.getPageWidth = function(index) {
+        return 800;
+    }
+    br.getPageHeight = function(index) {
+        return 1200;
+    }
+    br.getPageURI = function(index, reduce, rotate) {
+        var leafStr = '000';
+        var imgStr = (index+1).toString();
+        var re = new RegExp("0{"+imgStr.length+"}$");
+        var url = 'http://www.archive.org/download/BookReader/img/page'+leafStr.replace(re, imgStr) + '.jpg';
+        return url;
+    }
+
+    br.getPageSide = function(index) {
+        if (0 == (index & 0x1)) {
+            return 'R';
+        } else {
+            return 'L';
+        }
+    }
+
+    br.getSpreadIndices = function(pindex) {
+        var spreadIndices = [null, null];
+        if ('rl' == this.pageProgression) {
+            // Right to Left
+            if (this.getPageSide(pindex) == 'R') {
+                spreadIndices[1] = pindex;
+                spreadIndices[0] = pindex + 1;
+            } else {
+                // Given index was LHS
+                spreadIndices[0] = pindex;
+                spreadIndices[1] = pindex - 1;
+            }
+        } else {
+            // Left to right
+            if (this.getPageSide(pindex) == 'L') {
+                spreadIndices[0] = pindex;
+                spreadIndices[1] = pindex + 1;
+            } else {
+                // Given index was RHS
+                spreadIndices[1] = pindex;
+                spreadIndices[0] = pindex - 1;
+            }
+        }
+
+        return spreadIndices;
+    }
+
+    br.getPageNum = function(index) {
+        return index+1;
+    }
+
+    br.numLeafs = 15;
+    br.bookTitle= 'Open Library BookReader Presentation';
+    br.bookUrl  = 'http://openlibrary.org';
+    br.imagesBaseURL = '../BookReader/images/';
+
+    br.getEmbedCode = function(frameWidth, frameHeight, viewParams) {
+        return "Embed code not supported in bookreader demo.";
+    }
+
+    br.init();
+
+    $('#BRtoolbar').find('.read').hide();
+    $('#textSrch').hide();
+    $('#btnSrch').hide();
+</script>
+
+</body>
+</html>
