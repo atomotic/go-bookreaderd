@@ -1,4 +1,4 @@
-# ia-bookreaderd
+# go-bookreaderd
 
 **internet archive bookreader** in a standalone server, built in **Go**  
 static assets from [BookReader](https://github.com/openlibrary/bookreader/tree/master/BookReader) are self-contained into the binary with [nrsc](http://bitbucket.org/tebeka/nrsc) 
