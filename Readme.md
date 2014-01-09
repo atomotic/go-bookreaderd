@@ -36,6 +36,9 @@ and open ```http://localhost:8088/book/{DIRECTORY}```
 - serve jpg in .zip containers, as internetarchive (maybe with automatic [jp2->jpg](https://github.com/openlibrary/bookreader/blob/master/BookReaderIA/datanode/BookReaderImages.inc.php))
 
 
+## credits
+```func nrscStatic()``` is inspired by [syncthing](https://github.com/calmh/syncthing/blob/master/gui.go#L103)
+
 ## License
 
 * CC0
